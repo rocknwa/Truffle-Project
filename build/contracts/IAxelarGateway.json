@@ -1,0 +1,1048 @@
+{
+  "contractName": "IAxelarGateway",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "destinationChain",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "destinationContractAddress",
+          "type": "string"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "payloadHash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "payload",
+          "type": "bytes"
+        }
+      ],
+      "name": "ContractCall",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "destinationChain",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "contractAddress",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes",
+          "name": "payload",
+          "type": "bytes"
+        }
+      ],
+      "name": "callContract",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "commandId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "sourceChain",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "sourceAddress",
+          "type": "string"
+        },
+        {
+          "internalType": "address",
+          "name": "contractAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "payloadHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "isContractCallApproved",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "commandId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "sourceChain",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "sourceAddress",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "payloadHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "validateContractCall",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "commandId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "isCommandExecuted",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"destinationChain\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"destinationContractAddress\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"payloadHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"bytes\",\"name\":\"payload\",\"type\":\"bytes\"}],\"name\":\"ContractCall\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"destinationChain\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"contractAddress\",\"type\":\"string\"},{\"internalType\":\"bytes\",\"name\":\"payload\",\"type\":\"bytes\"}],\"name\":\"callContract\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"commandId\",\"type\":\"bytes32\"}],\"name\":\"isCommandExecuted\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"commandId\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"sourceChain\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"sourceAddress\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"contractAddress\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"payloadHash\",\"type\":\"bytes32\"}],\"name\":\"isContractCallApproved\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"commandId\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"sourceChain\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"sourceAddress\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"payloadHash\",\"type\":\"bytes32\"}],\"name\":\"validateContractCall\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Interface for the Axelar Gateway that supports general message passing and contract call execution.\",\"events\":{\"ContractCall(address,string,string,bytes32,bytes)\":{\"details\":\"Logs the attempt to call a contract on another chain.\",\"params\":{\"destinationChain\":\"The name of the destination chain.\",\"destinationContractAddress\":\"The address of the contract on the destination chain.\",\"payload\":\"The payload data used for the contract call.\",\"payloadHash\":\"The keccak256 hash of the sent payload data.\",\"sender\":\"The address of the sender who initiated the contract call.\"}}},\"kind\":\"dev\",\"methods\":{\"callContract(string,string,bytes)\":{\"details\":\"Initiates a cross-chain contract call through the gateway to the specified destination chain and contract.\",\"params\":{\"contractAddress\":\"The address of the contract on the destination chain.\",\"destinationChain\":\"The name of the destination chain.\",\"payload\":\"The payload data to be used in the contract call.\"}},\"isCommandExecuted(bytes32)\":{\"details\":\"Determines whether a command, identified by the commandId, has been executed.\",\"params\":{\"commandId\":\"The identifier of the command to check.\"},\"returns\":{\"_0\":\"True if the command has been executed, false otherwise.\"}},\"isContractCallApproved(bytes32,string,string,address,bytes32)\":{\"details\":\"Determines whether a given contract call, identified by the commandId and payloadHash, is approved.\",\"params\":{\"commandId\":\"The identifier of the command to check.\",\"contractAddress\":\"The address of the contract where the call will be executed.\",\"payloadHash\":\"The keccak256 hash of the payload data.\",\"sourceAddress\":\"The address of the sender on the source chain.\",\"sourceChain\":\"The name of the source chain.\"},\"returns\":{\"_0\":\"True if the contract call is approved, false otherwise.\"}},\"validateContractCall(bytes32,string,string,bytes32)\":{\"details\":\"Validates the given contract call information and marks it as approved if valid.\",\"params\":{\"commandId\":\"The identifier of the command to validate.\",\"payloadHash\":\"The keccak256 hash of the payload data.\",\"sourceAddress\":\"The address of the sender on the source chain.\",\"sourceChain\":\"The name of the source chain.\"},\"returns\":{\"_0\":\"True if the contract call is validated and approved, false otherwise.\"}}},\"title\":\"IAxelarGateway\",\"version\":1},\"userdoc\":{\"events\":{\"ContractCall(address,string,string,bytes32,bytes)\":{\"notice\":\"Emitted when a contract call is made through the gateway.\"}},\"kind\":\"user\",\"methods\":{\"callContract(string,string,bytes)\":{\"notice\":\"Sends a contract call to another chain.\"},\"isCommandExecuted(bytes32)\":{\"notice\":\"Checks if a command has been executed.\"},\"isContractCallApproved(bytes32,string,string,address,bytes32)\":{\"notice\":\"Checks if a contract call is approved.\"},\"validateContractCall(bytes32,string,string,bytes32)\":{\"notice\":\"Validates and approves a contract call.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol\":\"IAxelarGateway\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol\":{\"keccak256\":\"0xbd92798eade563d8a663db59f6f04db5acdee5beda3a6d091e44a7d5c6b2f68e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1519882aed7b6de2ee1e316e5188d2bda1e305fc18a96b3895831f49dc9f90b0\",\"dweb:/ipfs/QmYTLwLGwmDkyX6GSE6PU93TkWP5mFz8qhmFyBrWfj6gaB\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\n/**\n * @title IAxelarGateway\n * @dev Interface for the Axelar Gateway that supports general message passing and contract call execution.\n */\ninterface IAxelarGateway {\n    /**\n     * @notice Emitted when a contract call is made through the gateway.\n     * @dev Logs the attempt to call a contract on another chain.\n     * @param sender The address of the sender who initiated the contract call.\n     * @param destinationChain The name of the destination chain.\n     * @param destinationContractAddress The address of the contract on the destination chain.\n     * @param payloadHash The keccak256 hash of the sent payload data.\n     * @param payload The payload data used for the contract call.\n     */\n    event ContractCall(\n        address indexed sender,\n        string destinationChain,\n        string destinationContractAddress,\n        bytes32 indexed payloadHash,\n        bytes payload\n    );\n\n    /**\n     * @notice Sends a contract call to another chain.\n     * @dev Initiates a cross-chain contract call through the gateway to the specified destination chain and contract.\n     * @param destinationChain The name of the destination chain.\n     * @param contractAddress The address of the contract on the destination chain.\n     * @param payload The payload data to be used in the contract call.\n     */\n    function callContract(\n        string calldata destinationChain,\n        string calldata contractAddress,\n        bytes calldata payload\n    ) external;\n\n    /**\n     * @notice Checks if a contract call is approved.\n     * @dev Determines whether a given contract call, identified by the commandId and payloadHash, is approved.\n     * @param commandId The identifier of the command to check.\n     * @param sourceChain The name of the source chain.\n     * @param sourceAddress The address of the sender on the source chain.\n     * @param contractAddress The address of the contract where the call will be executed.\n     * @param payloadHash The keccak256 hash of the payload data.\n     * @return True if the contract call is approved, false otherwise.\n     */\n    function isContractCallApproved(\n        bytes32 commandId,\n        string calldata sourceChain,\n        string calldata sourceAddress,\n        address contractAddress,\n        bytes32 payloadHash\n    ) external view returns (bool);\n\n    /**\n     * @notice Validates and approves a contract call.\n     * @dev Validates the given contract call information and marks it as approved if valid.\n     * @param commandId The identifier of the command to validate.\n     * @param sourceChain The name of the source chain.\n     * @param sourceAddress The address of the sender on the source chain.\n     * @param payloadHash The keccak256 hash of the payload data.\n     * @return True if the contract call is validated and approved, false otherwise.\n     */\n    function validateContractCall(\n        bytes32 commandId,\n        string calldata sourceChain,\n        string calldata sourceAddress,\n        bytes32 payloadHash\n    ) external returns (bool);\n\n    /**\n     * @notice Checks if a command has been executed.\n     * @dev Determines whether a command, identified by the commandId, has been executed.\n     * @param commandId The identifier of the command to check.\n     * @return True if the command has been executed, false otherwise.\n     */\n    function isCommandExecuted(bytes32 commandId) external view returns (bool);\n}\n",
+  "sourcePath": "@axelar-network\\axelar-gmp-sdk-solidity\\contracts\\interfaces\\IAxelarGateway.sol",
+  "ast": {
+    "absolutePath": "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol",
+    "exportedSymbols": {
+      "IAxelarGateway": [
+        192
+      ]
+    },
+    "id": 193,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 129,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:2"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IAxelarGateway",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 130,
+          "nodeType": "StructuredDocumentation",
+          "src": "58:140:2",
+          "text": " @title IAxelarGateway\n @dev Interface for the Axelar Gateway that supports general message passing and contract call execution."
+        },
+        "fullyImplemented": false,
+        "id": 192,
+        "linearizedBaseContracts": [
+          192
+        ],
+        "name": "IAxelarGateway",
+        "nameLocation": "209:14:2",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 131,
+              "nodeType": "StructuredDocumentation",
+              "src": "230:529:2",
+              "text": " @notice Emitted when a contract call is made through the gateway.\n @dev Logs the attempt to call a contract on another chain.\n @param sender The address of the sender who initiated the contract call.\n @param destinationChain The name of the destination chain.\n @param destinationContractAddress The address of the contract on the destination chain.\n @param payloadHash The keccak256 hash of the sent payload data.\n @param payload The payload data used for the contract call."
+            },
+            "eventSelector": "30ae6cc78c27e651745bf2ad08a11de83910ac1e347a52f7ac898c0fbef94dae",
+            "id": 143,
+            "name": "ContractCall",
+            "nameLocation": "770:12:2",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 142,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 133,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "sender",
+                  "nameLocation": "808:6:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 143,
+                  "src": "792:22:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 132,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "792:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 135,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "destinationChain",
+                  "nameLocation": "831:16:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 143,
+                  "src": "824:23:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 134,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "824:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 137,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "destinationContractAddress",
+                  "nameLocation": "864:26:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 143,
+                  "src": "857:33:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 136,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "857:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 139,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "payloadHash",
+                  "nameLocation": "916:11:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 143,
+                  "src": "900:27:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 138,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "900:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 141,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "payload",
+                  "nameLocation": "943:7:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 143,
+                  "src": "937:13:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 140,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "937:5:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "782:174:2"
+            },
+            "src": "764:193:2"
+          },
+          {
+            "documentation": {
+              "id": 144,
+              "nodeType": "StructuredDocumentation",
+              "src": "963:407:2",
+              "text": " @notice Sends a contract call to another chain.\n @dev Initiates a cross-chain contract call through the gateway to the specified destination chain and contract.\n @param destinationChain The name of the destination chain.\n @param contractAddress The address of the contract on the destination chain.\n @param payload The payload data to be used in the contract call."
+            },
+            "functionSelector": "1c92115f",
+            "id": 153,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "callContract",
+            "nameLocation": "1384:12:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 151,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 146,
+                  "mutability": "mutable",
+                  "name": "destinationChain",
+                  "nameLocation": "1422:16:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 153,
+                  "src": "1406:32:2",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 145,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1406:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 148,
+                  "mutability": "mutable",
+                  "name": "contractAddress",
+                  "nameLocation": "1464:15:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 153,
+                  "src": "1448:31:2",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 147,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1448:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 150,
+                  "mutability": "mutable",
+                  "name": "payload",
+                  "nameLocation": "1504:7:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 153,
+                  "src": "1489:22:2",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 149,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1489:5:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1396:121:2"
+            },
+            "returnParameters": {
+              "id": 152,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1526:0:2"
+            },
+            "scope": 192,
+            "src": "1375:152:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 154,
+              "nodeType": "StructuredDocumentation",
+              "src": "1533:600:2",
+              "text": " @notice Checks if a contract call is approved.\n @dev Determines whether a given contract call, identified by the commandId and payloadHash, is approved.\n @param commandId The identifier of the command to check.\n @param sourceChain The name of the source chain.\n @param sourceAddress The address of the sender on the source chain.\n @param contractAddress The address of the contract where the call will be executed.\n @param payloadHash The keccak256 hash of the payload data.\n @return True if the contract call is approved, false otherwise."
+            },
+            "functionSelector": "f6a5f9f5",
+            "id": 169,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isContractCallApproved",
+            "nameLocation": "2147:22:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 165,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 156,
+                  "mutability": "mutable",
+                  "name": "commandId",
+                  "nameLocation": "2187:9:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 169,
+                  "src": "2179:17:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 155,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2179:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 158,
+                  "mutability": "mutable",
+                  "name": "sourceChain",
+                  "nameLocation": "2222:11:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 169,
+                  "src": "2206:27:2",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 157,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2206:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 160,
+                  "mutability": "mutable",
+                  "name": "sourceAddress",
+                  "nameLocation": "2259:13:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 169,
+                  "src": "2243:29:2",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 159,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2243:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 162,
+                  "mutability": "mutable",
+                  "name": "contractAddress",
+                  "nameLocation": "2290:15:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 169,
+                  "src": "2282:23:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 161,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2282:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 164,
+                  "mutability": "mutable",
+                  "name": "payloadHash",
+                  "nameLocation": "2323:11:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 169,
+                  "src": "2315:19:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 163,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2315:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2169:171:2"
+            },
+            "returnParameters": {
+              "id": 168,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 167,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 169,
+                  "src": "2364:4:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 166,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2364:4:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2363:6:2"
+            },
+            "scope": 192,
+            "src": "2138:232:2",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 170,
+              "nodeType": "StructuredDocumentation",
+              "src": "2376:508:2",
+              "text": " @notice Validates and approves a contract call.\n @dev Validates the given contract call information and marks it as approved if valid.\n @param commandId The identifier of the command to validate.\n @param sourceChain The name of the source chain.\n @param sourceAddress The address of the sender on the source chain.\n @param payloadHash The keccak256 hash of the payload data.\n @return True if the contract call is validated and approved, false otherwise."
+            },
+            "functionSelector": "5f6970c3",
+            "id": 183,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "validateContractCall",
+            "nameLocation": "2898:20:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 179,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 172,
+                  "mutability": "mutable",
+                  "name": "commandId",
+                  "nameLocation": "2936:9:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 183,
+                  "src": "2928:17:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 171,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2928:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 174,
+                  "mutability": "mutable",
+                  "name": "sourceChain",
+                  "nameLocation": "2971:11:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 183,
+                  "src": "2955:27:2",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 173,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2955:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 176,
+                  "mutability": "mutable",
+                  "name": "sourceAddress",
+                  "nameLocation": "3008:13:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 183,
+                  "src": "2992:29:2",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 175,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2992:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 178,
+                  "mutability": "mutable",
+                  "name": "payloadHash",
+                  "nameLocation": "3039:11:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 183,
+                  "src": "3031:19:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 177,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3031:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2918:138:2"
+            },
+            "returnParameters": {
+              "id": 182,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 181,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 183,
+                  "src": "3075:4:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 180,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3075:4:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3074:6:2"
+            },
+            "scope": 192,
+            "src": "2889:192:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 184,
+              "nodeType": "StructuredDocumentation",
+              "src": "3087:290:2",
+              "text": " @notice Checks if a command has been executed.\n @dev Determines whether a command, identified by the commandId, has been executed.\n @param commandId The identifier of the command to check.\n @return True if the command has been executed, false otherwise."
+            },
+            "functionSelector": "d26ff210",
+            "id": 191,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isCommandExecuted",
+            "nameLocation": "3391:17:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 187,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 186,
+                  "mutability": "mutable",
+                  "name": "commandId",
+                  "nameLocation": "3417:9:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 191,
+                  "src": "3409:17:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 185,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3409:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3408:19:2"
+            },
+            "returnParameters": {
+              "id": 190,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 189,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 191,
+                  "src": "3451:4:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 188,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3451:4:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3450:6:2"
+            },
+            "scope": 192,
+            "src": "3382:75:2",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 193,
+        "src": "199:3260:2",
+        "usedErrors": [],
+        "usedEvents": [
+          143
+        ]
+      }
+    ],
+    "src": "33:3427:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.20+commit.a1b79de6.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.16",
+  "updatedAt": "2024-11-13T15:00:16.988Z",
+  "devdoc": {
+    "details": "Interface for the Axelar Gateway that supports general message passing and contract call execution.",
+    "events": {
+      "ContractCall(address,string,string,bytes32,bytes)": {
+        "details": "Logs the attempt to call a contract on another chain.",
+        "params": {
+          "destinationChain": "The name of the destination chain.",
+          "destinationContractAddress": "The address of the contract on the destination chain.",
+          "payload": "The payload data used for the contract call.",
+          "payloadHash": "The keccak256 hash of the sent payload data.",
+          "sender": "The address of the sender who initiated the contract call."
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "callContract(string,string,bytes)": {
+        "details": "Initiates a cross-chain contract call through the gateway to the specified destination chain and contract.",
+        "params": {
+          "contractAddress": "The address of the contract on the destination chain.",
+          "destinationChain": "The name of the destination chain.",
+          "payload": "The payload data to be used in the contract call."
+        }
+      },
+      "isCommandExecuted(bytes32)": {
+        "details": "Determines whether a command, identified by the commandId, has been executed.",
+        "params": {
+          "commandId": "The identifier of the command to check."
+        },
+        "returns": {
+          "_0": "True if the command has been executed, false otherwise."
+        }
+      },
+      "isContractCallApproved(bytes32,string,string,address,bytes32)": {
+        "details": "Determines whether a given contract call, identified by the commandId and payloadHash, is approved.",
+        "params": {
+          "commandId": "The identifier of the command to check.",
+          "contractAddress": "The address of the contract where the call will be executed.",
+          "payloadHash": "The keccak256 hash of the payload data.",
+          "sourceAddress": "The address of the sender on the source chain.",
+          "sourceChain": "The name of the source chain."
+        },
+        "returns": {
+          "_0": "True if the contract call is approved, false otherwise."
+        }
+      },
+      "validateContractCall(bytes32,string,string,bytes32)": {
+        "details": "Validates the given contract call information and marks it as approved if valid.",
+        "params": {
+          "commandId": "The identifier of the command to validate.",
+          "payloadHash": "The keccak256 hash of the payload data.",
+          "sourceAddress": "The address of the sender on the source chain.",
+          "sourceChain": "The name of the source chain."
+        },
+        "returns": {
+          "_0": "True if the contract call is validated and approved, false otherwise."
+        }
+      }
+    },
+    "title": "IAxelarGateway",
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "ContractCall(address,string,string,bytes32,bytes)": {
+        "notice": "Emitted when a contract call is made through the gateway."
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "callContract(string,string,bytes)": {
+        "notice": "Sends a contract call to another chain."
+      },
+      "isCommandExecuted(bytes32)": {
+        "notice": "Checks if a command has been executed."
+      },
+      "isContractCallApproved(bytes32,string,string,address,bytes32)": {
+        "notice": "Checks if a contract call is approved."
+      },
+      "validateContractCall(bytes32,string,string,bytes32)": {
+        "notice": "Validates and approves a contract call."
+      }
+    },
+    "version": 1
+  }
+}

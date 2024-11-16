@@ -1,0 +1,1340 @@
+{
+  "contractName": "AxelarExecutable",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "InvalidAddress",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotApprovedByGateway",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "commandId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "sourceChain",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "sourceAddress",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes",
+          "name": "payload",
+          "type": "bytes"
+        }
+      ],
+      "name": "execute",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "gateway",
+      "outputs": [
+        {
+          "internalType": "contract IAxelarGateway",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"InvalidAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotApprovedByGateway\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"commandId\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"sourceChain\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"sourceAddress\",\"type\":\"string\"},{\"internalType\":\"bytes\",\"name\":\"payload\",\"type\":\"bytes\"}],\"name\":\"execute\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"gateway\",\"outputs\":[{\"internalType\":\"contract IAxelarGateway\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Abstract contract to be inherited by contracts that need to execute cross-chain commands via Axelar's Gateway. It implements the IAxelarExecutable interface.\",\"errors\":{\"InvalidAddress()\":[{\"details\":\"Thrown when a function is called with an invalid address.\"}],\"NotApprovedByGateway()\":[{\"details\":\"Thrown when the call is not approved by the Axelar Gateway.\"}]},\"kind\":\"dev\",\"methods\":{\"constructor\":{\"details\":\"Contract constructor that sets the Axelar Gateway address. Reverts if the provided address is the zero address.\",\"params\":{\"gateway_\":\"The address of the Axelar Gateway contract.\"}},\"execute(bytes32,string,string,bytes)\":{\"details\":\"This function ensures the call is approved by Axelar Gateway before execution. It uses a hash of the payload for validation and internally calls _execute for the actual command execution. Reverts if the validation fails.\",\"params\":{\"commandId\":\"The unique identifier of the cross-chain message being executed.\",\"payload\":\"The payload of the message payload.\",\"sourceAddress\":\"The address on the source chain that sent the message.\",\"sourceChain\":\"The name of the source chain from which the message originated.\"}},\"gateway()\":{\"returns\":{\"_0\":\"The Axelar Gateway instance.\"}}},\"stateVariables\":{\"gatewayAddress\":{\"details\":\"Reference to the Axelar Gateway contract.\"}},\"title\":\"AxelarExecutable\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"execute(bytes32,string,string,bytes)\":{\"notice\":\"Executes the cross-chain command after validating it with the Axelar Gateway.\"},\"gateway()\":{\"notice\":\"Returns the address of the AxelarGateway contract.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"@axelar-network/axelar-gmp-sdk-solidity/contracts/executable/AxelarExecutable.sol\":\"AxelarExecutable\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@axelar-network/axelar-gmp-sdk-solidity/contracts/executable/AxelarExecutable.sol\":{\"keccak256\":\"0x89078799d3ff3501cb859e3b87c9ac9541dd54bcdeb194b230324a2d74f6a74a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d7e24a3b23e54b4fa45e2184da956a04a76b68dbc27b5706f465d8989ecb7109\",\"dweb:/ipfs/QmeFzVaUCYWgHAt9sCF62cUkGpvFfchH3riu7ZQCd5f8RP\"]},\"@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarExecutable.sol\":{\"keccak256\":\"0xc62de7533d4891bfd5bd8792e6638cb1d3ff4389dee2ce1f1dc8de235a057daa\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f934a6afcebde328dbf271af65a24370618f173c65f705739fb16e7f99195c15\",\"dweb:/ipfs/QmZ61TPX1wPk3UDhpGxktTdYvgei3kBG1iCMYLt99ANwhN\"]},\"@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol\":{\"keccak256\":\"0xbd92798eade563d8a663db59f6f04db5acdee5beda3a6d091e44a7d5c6b2f68e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1519882aed7b6de2ee1e316e5188d2bda1e305fc18a96b3895831f49dc9f90b0\",\"dweb:/ipfs/QmYTLwLGwmDkyX6GSE6PU93TkWP5mFz8qhmFyBrWfj6gaB\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\nimport { IAxelarGateway } from '../interfaces/IAxelarGateway.sol';\nimport { IAxelarExecutable } from '../interfaces/IAxelarExecutable.sol';\n\n/**\n * @title AxelarExecutable\n * @dev Abstract contract to be inherited by contracts that need to execute cross-chain commands via Axelar's Gateway.\n * It implements the IAxelarExecutable interface.\n */\nabstract contract AxelarExecutable is IAxelarExecutable {\n    /// @dev Reference to the Axelar Gateway contract.\n    address internal immutable gatewayAddress;\n\n    /**\n     * @dev Contract constructor that sets the Axelar Gateway address.\n     * Reverts if the provided address is the zero address.\n     * @param gateway_ The address of the Axelar Gateway contract.\n     */\n    constructor(address gateway_) {\n        if (gateway_ == address(0)) revert InvalidAddress();\n\n        gatewayAddress = gateway_;\n    }\n\n    /**\n     * @notice Executes the cross-chain command after validating it with the Axelar Gateway.\n     * @dev This function ensures the call is approved by Axelar Gateway before execution.\n     * It uses a hash of the payload for validation and internally calls _execute for the actual command execution.\n     * Reverts if the validation fails.\n     * @param commandId The unique identifier of the cross-chain message being executed.\n     * @param sourceChain The name of the source chain from which the message originated.\n     * @param sourceAddress The address on the source chain that sent the message.\n     * @param payload The payload of the message payload.\n     */\n    function execute(\n        bytes32 commandId,\n        string calldata sourceChain,\n        string calldata sourceAddress,\n        bytes calldata payload\n    ) external virtual {\n        bytes32 payloadHash = keccak256(payload);\n\n        if (!gateway().validateContractCall(commandId, sourceChain, sourceAddress, payloadHash))\n            revert NotApprovedByGateway();\n\n        _execute(commandId, sourceChain, sourceAddress, payload);\n    }\n\n    /**\n     * @dev Internal virtual function to be overridden by child contracts to execute the command.\n     * It allows child contracts to define their custom command execution logic.\n     * @param commandId The identifier of the command to execute.\n     * @param sourceChain The name of the source chain from which the command originated.\n     * @param sourceAddress The address on the source chain that sent the command.\n     * @param payload The payload of the command to be executed.\n     */\n    function _execute(\n        bytes32 commandId,\n        string calldata sourceChain,\n        string calldata sourceAddress,\n        bytes calldata payload\n    ) internal virtual;\n\n    /**\n     * @notice Returns the address of the AxelarGateway contract.\n     * @return The Axelar Gateway instance.\n     */\n    function gateway() public view returns (IAxelarGateway) {\n        return IAxelarGateway(gatewayAddress);\n    }\n}\n",
+  "sourcePath": "@axelar-network\\axelar-gmp-sdk-solidity\\contracts\\executable\\AxelarExecutable.sol",
+  "ast": {
+    "absolutePath": "@axelar-network/axelar-gmp-sdk-solidity/contracts/executable/AxelarExecutable.sol",
+    "exportedSymbols": {
+      "AxelarExecutable": [
+        96
+      ],
+      "IAxelarExecutable": [
+        127
+      ],
+      "IAxelarGateway": [
+        192
+      ]
+    },
+    "id": 97,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:0"
+      },
+      {
+        "absolutePath": "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol",
+        "file": "../interfaces/IAxelarGateway.sol",
+        "id": 3,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 97,
+        "sourceUnit": 193,
+        "src": "58:66:0",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 2,
+              "name": "IAxelarGateway",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 192,
+              "src": "67:14:0",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarExecutable.sol",
+        "file": "../interfaces/IAxelarExecutable.sol",
+        "id": 5,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 97,
+        "sourceUnit": 128,
+        "src": "125:72:0",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 4,
+              "name": "IAxelarExecutable",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 127,
+              "src": "134:17:0",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "abstract": true,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 7,
+              "name": "IAxelarExecutable",
+              "nameLocations": [
+                "441:17:0"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 127,
+              "src": "441:17:0"
+            },
+            "id": 8,
+            "nodeType": "InheritanceSpecifier",
+            "src": "441:17:0"
+          }
+        ],
+        "canonicalName": "AxelarExecutable",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 6,
+          "nodeType": "StructuredDocumentation",
+          "src": "199:203:0",
+          "text": " @title AxelarExecutable\n @dev Abstract contract to be inherited by contracts that need to execute cross-chain commands via Axelar's Gateway.\n It implements the IAxelarExecutable interface."
+        },
+        "fullyImplemented": false,
+        "id": 96,
+        "linearizedBaseContracts": [
+          96,
+          127
+        ],
+        "name": "AxelarExecutable",
+        "nameLocation": "421:16:0",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "documentation": {
+              "id": 9,
+              "nodeType": "StructuredDocumentation",
+              "src": "465:50:0",
+              "text": "@dev Reference to the Axelar Gateway contract."
+            },
+            "id": 11,
+            "mutability": "immutable",
+            "name": "gatewayAddress",
+            "nameLocation": "547:14:0",
+            "nodeType": "VariableDeclaration",
+            "scope": 96,
+            "src": "520:41:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 10,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "520:7:0",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 31,
+              "nodeType": "Block",
+              "src": "812:104:0",
+              "statements": [
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    },
+                    "id": 22,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "id": 17,
+                      "name": "gateway_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 14,
+                      "src": "826:8:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "==",
+                    "rightExpression": {
+                      "arguments": [
+                        {
+                          "hexValue": "30",
+                          "id": 20,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "number",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "846:1:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_rational_0_by_1",
+                            "typeString": "int_const 0"
+                          },
+                          "value": "0"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_rational_0_by_1",
+                            "typeString": "int_const 0"
+                          }
+                        ],
+                        "id": 19,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "lValueRequested": false,
+                        "nodeType": "ElementaryTypeNameExpression",
+                        "src": "838:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_address_$",
+                          "typeString": "type(address)"
+                        },
+                        "typeName": {
+                          "id": 18,
+                          "name": "address",
+                          "nodeType": "ElementaryTypeName",
+                          "src": "838:7:0",
+                          "typeDescriptions": {}
+                        }
+                      },
+                      "id": 21,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "nameLocations": [],
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "838:10:0",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "826:22:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 26,
+                  "nodeType": "IfStatement",
+                  "src": "822:51:0",
+                  "trueBody": {
+                    "errorCall": {
+                      "arguments": [],
+                      "expression": {
+                        "argumentTypes": [],
+                        "id": 23,
+                        "name": "InvalidAddress",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 104,
+                        "src": "857:14:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_error_pure$__$returns$__$",
+                          "typeString": "function () pure"
+                        }
+                      },
+                      "id": 24,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "functionCall",
+                      "lValueRequested": false,
+                      "nameLocations": [],
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "857:16:0",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_tuple$__$",
+                        "typeString": "tuple()"
+                      }
+                    },
+                    "id": 25,
+                    "nodeType": "RevertStatement",
+                    "src": "850:23:0"
+                  }
+                },
+                {
+                  "expression": {
+                    "id": 29,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 27,
+                      "name": "gatewayAddress",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 11,
+                      "src": "884:14:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 28,
+                      "name": "gateway_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 14,
+                      "src": "901:8:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "884:25:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 30,
+                  "nodeType": "ExpressionStatement",
+                  "src": "884:25:0"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 12,
+              "nodeType": "StructuredDocumentation",
+              "src": "568:209:0",
+              "text": " @dev Contract constructor that sets the Axelar Gateway address.\n Reverts if the provided address is the zero address.\n @param gateway_ The address of the Axelar Gateway contract."
+            },
+            "id": 32,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 14,
+                  "mutability": "mutable",
+                  "name": "gateway_",
+                  "nameLocation": "802:8:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 32,
+                  "src": "794:16:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 13,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "794:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "793:18:0"
+            },
+            "returnParameters": {
+              "id": 16,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "812:0:0"
+            },
+            "scope": 96,
+            "src": "782:134:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "baseFunctions": [
+              126
+            ],
+            "body": {
+              "id": 70,
+              "nodeType": "Block",
+              "src": "1773:265:0",
+              "statements": [
+                {
+                  "assignments": [
+                    45
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 45,
+                      "mutability": "mutable",
+                      "name": "payloadHash",
+                      "nameLocation": "1791:11:0",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 70,
+                      "src": "1783:19:0",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      },
+                      "typeName": {
+                        "id": 44,
+                        "name": "bytes32",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1783:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 49,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "id": 47,
+                        "name": "payload",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 41,
+                        "src": "1815:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_calldata_ptr",
+                          "typeString": "bytes calldata"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes_calldata_ptr",
+                          "typeString": "bytes calldata"
+                        }
+                      ],
+                      "id": 46,
+                      "name": "keccak256",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 4294967288,
+                      "src": "1805:9:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                        "typeString": "function (bytes memory) pure returns (bytes32)"
+                      }
+                    },
+                    "id": 48,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1805:18:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1783:40:0"
+                },
+                {
+                  "condition": {
+                    "id": 58,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "!",
+                    "prefix": true,
+                    "src": "1838:83:0",
+                    "subExpression": {
+                      "arguments": [
+                        {
+                          "id": 53,
+                          "name": "commandId",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 35,
+                          "src": "1870:9:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        {
+                          "id": 54,
+                          "name": "sourceChain",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 37,
+                          "src": "1881:11:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_string_calldata_ptr",
+                            "typeString": "string calldata"
+                          }
+                        },
+                        {
+                          "id": 55,
+                          "name": "sourceAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 39,
+                          "src": "1894:13:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_string_calldata_ptr",
+                            "typeString": "string calldata"
+                          }
+                        },
+                        {
+                          "id": 56,
+                          "name": "payloadHash",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 45,
+                          "src": "1909:11:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          },
+                          {
+                            "typeIdentifier": "t_string_calldata_ptr",
+                            "typeString": "string calldata"
+                          },
+                          {
+                            "typeIdentifier": "t_string_calldata_ptr",
+                            "typeString": "string calldata"
+                          },
+                          {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        ],
+                        "expression": {
+                          "arguments": [],
+                          "expression": {
+                            "argumentTypes": [],
+                            "id": 50,
+                            "name": "gateway",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 95,
+                            "src": "1839:7:0",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_internal_view$__$returns$_t_contract$_IAxelarGateway_$192_$",
+                              "typeString": "function () view returns (contract IAxelarGateway)"
+                            }
+                          },
+                          "id": 51,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "nameLocations": [],
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1839:9:0",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_IAxelarGateway_$192",
+                            "typeString": "contract IAxelarGateway"
+                          }
+                        },
+                        "id": 52,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberLocation": "1849:20:0",
+                        "memberName": "validateContractCall",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 183,
+                        "src": "1839:30:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_external_nonpayable$_t_bytes32_$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_bytes32_$returns$_t_bool_$",
+                          "typeString": "function (bytes32,string memory,string memory,bytes32) external returns (bool)"
+                        }
+                      },
+                      "id": 57,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "functionCall",
+                      "lValueRequested": false,
+                      "nameLocations": [],
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "1839:82:0",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 62,
+                  "nodeType": "IfStatement",
+                  "src": "1834:130:0",
+                  "trueBody": {
+                    "errorCall": {
+                      "arguments": [],
+                      "expression": {
+                        "argumentTypes": [],
+                        "id": 59,
+                        "name": "NotApprovedByGateway",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 107,
+                        "src": "1942:20:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_error_pure$__$returns$__$",
+                          "typeString": "function () pure"
+                        }
+                      },
+                      "id": 60,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "functionCall",
+                      "lValueRequested": false,
+                      "nameLocations": [],
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "1942:22:0",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_tuple$__$",
+                        "typeString": "tuple()"
+                      }
+                    },
+                    "id": 61,
+                    "nodeType": "RevertStatement",
+                    "src": "1935:29:0"
+                  }
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 64,
+                        "name": "commandId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 35,
+                        "src": "1984:9:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      {
+                        "id": 65,
+                        "name": "sourceChain",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 37,
+                        "src": "1995:11:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_calldata_ptr",
+                          "typeString": "string calldata"
+                        }
+                      },
+                      {
+                        "id": 66,
+                        "name": "sourceAddress",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 39,
+                        "src": "2008:13:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_calldata_ptr",
+                          "typeString": "string calldata"
+                        }
+                      },
+                      {
+                        "id": 67,
+                        "name": "payload",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 41,
+                        "src": "2023:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_calldata_ptr",
+                          "typeString": "bytes calldata"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        },
+                        {
+                          "typeIdentifier": "t_string_calldata_ptr",
+                          "typeString": "string calldata"
+                        },
+                        {
+                          "typeIdentifier": "t_string_calldata_ptr",
+                          "typeString": "string calldata"
+                        },
+                        {
+                          "typeIdentifier": "t_bytes_calldata_ptr",
+                          "typeString": "bytes calldata"
+                        }
+                      ],
+                      "id": 63,
+                      "name": "_execute",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 83,
+                      "src": "1975:8:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_bytes32_$_t_string_calldata_ptr_$_t_string_calldata_ptr_$_t_bytes_calldata_ptr_$returns$__$",
+                        "typeString": "function (bytes32,string calldata,string calldata,bytes calldata)"
+                      }
+                    },
+                    "id": 68,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1975:56:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 69,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1975:56:0"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 33,
+              "nodeType": "StructuredDocumentation",
+              "src": "922:671:0",
+              "text": " @notice Executes the cross-chain command after validating it with the Axelar Gateway.\n @dev This function ensures the call is approved by Axelar Gateway before execution.\n It uses a hash of the payload for validation and internally calls _execute for the actual command execution.\n Reverts if the validation fails.\n @param commandId The unique identifier of the cross-chain message being executed.\n @param sourceChain The name of the source chain from which the message originated.\n @param sourceAddress The address on the source chain that sent the message.\n @param payload The payload of the message payload."
+            },
+            "functionSelector": "49160658",
+            "id": 71,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "execute",
+            "nameLocation": "1607:7:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 42,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 35,
+                  "mutability": "mutable",
+                  "name": "commandId",
+                  "nameLocation": "1632:9:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 71,
+                  "src": "1624:17:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 34,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1624:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 37,
+                  "mutability": "mutable",
+                  "name": "sourceChain",
+                  "nameLocation": "1667:11:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 71,
+                  "src": "1651:27:0",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 36,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1651:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 39,
+                  "mutability": "mutable",
+                  "name": "sourceAddress",
+                  "nameLocation": "1704:13:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 71,
+                  "src": "1688:29:0",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 38,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1688:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 41,
+                  "mutability": "mutable",
+                  "name": "payload",
+                  "nameLocation": "1742:7:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 71,
+                  "src": "1727:22:0",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 40,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1727:5:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1614:141:0"
+            },
+            "returnParameters": {
+              "id": 43,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1773:0:0"
+            },
+            "scope": 96,
+            "src": "1598:440:0",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 72,
+              "nodeType": "StructuredDocumentation",
+              "src": "2044:494:0",
+              "text": " @dev Internal virtual function to be overridden by child contracts to execute the command.\n It allows child contracts to define their custom command execution logic.\n @param commandId The identifier of the command to execute.\n @param sourceChain The name of the source chain from which the command originated.\n @param sourceAddress The address on the source chain that sent the command.\n @param payload The payload of the command to be executed."
+            },
+            "id": 83,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_execute",
+            "nameLocation": "2552:8:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 81,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 74,
+                  "mutability": "mutable",
+                  "name": "commandId",
+                  "nameLocation": "2578:9:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 83,
+                  "src": "2570:17:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 73,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2570:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 76,
+                  "mutability": "mutable",
+                  "name": "sourceChain",
+                  "nameLocation": "2613:11:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 83,
+                  "src": "2597:27:0",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 75,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2597:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 78,
+                  "mutability": "mutable",
+                  "name": "sourceAddress",
+                  "nameLocation": "2650:13:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 83,
+                  "src": "2634:29:0",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 77,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2634:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 80,
+                  "mutability": "mutable",
+                  "name": "payload",
+                  "nameLocation": "2688:7:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 83,
+                  "src": "2673:22:0",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 79,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2673:5:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2560:141:0"
+            },
+            "returnParameters": {
+              "id": 82,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2718:0:0"
+            },
+            "scope": 96,
+            "src": "2543:176:0",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "internal"
+          },
+          {
+            "baseFunctions": [
+              114
+            ],
+            "body": {
+              "id": 94,
+              "nodeType": "Block",
+              "src": "2907:54:0",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 91,
+                        "name": "gatewayAddress",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 11,
+                        "src": "2939:14:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 90,
+                      "name": "IAxelarGateway",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 192,
+                      "src": "2924:14:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_contract$_IAxelarGateway_$192_$",
+                        "typeString": "type(contract IAxelarGateway)"
+                      }
+                    },
+                    "id": 92,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2924:30:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IAxelarGateway_$192",
+                      "typeString": "contract IAxelarGateway"
+                    }
+                  },
+                  "functionReturnParameters": 89,
+                  "id": 93,
+                  "nodeType": "Return",
+                  "src": "2917:37:0"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 84,
+              "nodeType": "StructuredDocumentation",
+              "src": "2725:121:0",
+              "text": " @notice Returns the address of the AxelarGateway contract.\n @return The Axelar Gateway instance."
+            },
+            "functionSelector": "116191b6",
+            "id": 95,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "gateway",
+            "nameLocation": "2860:7:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 85,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2867:2:0"
+            },
+            "returnParameters": {
+              "id": 89,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 88,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 95,
+                  "src": "2891:14:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IAxelarGateway_$192",
+                    "typeString": "contract IAxelarGateway"
+                  },
+                  "typeName": {
+                    "id": 87,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 86,
+                      "name": "IAxelarGateway",
+                      "nameLocations": [
+                        "2891:14:0"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 192,
+                      "src": "2891:14:0"
+                    },
+                    "referencedDeclaration": 192,
+                    "src": "2891:14:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IAxelarGateway_$192",
+                      "typeString": "contract IAxelarGateway"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2890:16:0"
+            },
+            "scope": 96,
+            "src": "2851:110:0",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 97,
+        "src": "403:2560:0",
+        "usedErrors": [
+          104,
+          107
+        ],
+        "usedEvents": []
+      }
+    ],
+    "src": "33:2931:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.20+commit.a1b79de6.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.16",
+  "updatedAt": "2024-11-13T15:00:16.983Z",
+  "devdoc": {
+    "details": "Abstract contract to be inherited by contracts that need to execute cross-chain commands via Axelar's Gateway. It implements the IAxelarExecutable interface.",
+    "errors": {
+      "InvalidAddress()": [
+        {
+          "details": "Thrown when a function is called with an invalid address."
+        }
+      ],
+      "NotApprovedByGateway()": [
+        {
+          "details": "Thrown when the call is not approved by the Axelar Gateway."
+        }
+      ]
+    },
+    "kind": "dev",
+    "methods": {
+      "constructor": {
+        "details": "Contract constructor that sets the Axelar Gateway address. Reverts if the provided address is the zero address.",
+        "params": {
+          "gateway_": "The address of the Axelar Gateway contract."
+        }
+      },
+      "execute(bytes32,string,string,bytes)": {
+        "details": "This function ensures the call is approved by Axelar Gateway before execution. It uses a hash of the payload for validation and internally calls _execute for the actual command execution. Reverts if the validation fails.",
+        "params": {
+          "commandId": "The unique identifier of the cross-chain message being executed.",
+          "payload": "The payload of the message payload.",
+          "sourceAddress": "The address on the source chain that sent the message.",
+          "sourceChain": "The name of the source chain from which the message originated."
+        }
+      },
+      "gateway()": {
+        "returns": {
+          "_0": "The Axelar Gateway instance."
+        }
+      }
+    },
+    "stateVariables": {
+      "gatewayAddress": {
+        "details": "Reference to the Axelar Gateway contract."
+      }
+    },
+    "title": "AxelarExecutable",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "execute(bytes32,string,string,bytes)": {
+        "notice": "Executes the cross-chain command after validating it with the Axelar Gateway."
+      },
+      "gateway()": {
+        "notice": "Returns the address of the AxelarGateway contract."
+      }
+    },
+    "version": 1
+  }
+}

@@ -1,0 +1,455 @@
+{
+  "contractName": "IAxelarExecutable",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "InvalidAddress",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotApprovedByGateway",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "gateway",
+      "outputs": [
+        {
+          "internalType": "contract IAxelarGateway",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "commandId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "sourceChain",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "sourceAddress",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes",
+          "name": "payload",
+          "type": "bytes"
+        }
+      ],
+      "name": "execute",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"InvalidAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotApprovedByGateway\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"commandId\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"sourceChain\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"sourceAddress\",\"type\":\"string\"},{\"internalType\":\"bytes\",\"name\":\"payload\",\"type\":\"bytes\"}],\"name\":\"execute\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"gateway\",\"outputs\":[{\"internalType\":\"contract IAxelarGateway\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Interface for a contract that is executable by Axelar Gateway's cross-chain message passing. It defines a standard interface to execute commands sent from another chain.\",\"errors\":{\"InvalidAddress()\":[{\"details\":\"Thrown when a function is called with an invalid address.\"}],\"NotApprovedByGateway()\":[{\"details\":\"Thrown when the call is not approved by the Axelar Gateway.\"}]},\"kind\":\"dev\",\"methods\":{\"execute(bytes32,string,string,bytes)\":{\"details\":\"This function is called by the Axelar Gateway to carry out cross-chain commands. Reverts if the call is not approved by the gateway or other checks fail.\",\"params\":{\"commandId\":\"The identifier of the command to execute.\",\"payload\":\"The payload of the command to be executed. This typically includes the function selector and encoded arguments.\",\"sourceAddress\":\"The address on the source chain that sent the command.\",\"sourceChain\":\"The name of the source chain from where the command originated.\"}},\"gateway()\":{\"returns\":{\"_0\":\"The Axelar Gateway contract associated with this executable contract.\"}}},\"title\":\"IAxelarExecutable\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"execute(bytes32,string,string,bytes)\":{\"notice\":\"Executes the specified command sent from another chain.\"},\"gateway()\":{\"notice\":\"Returns the address of the AxelarGateway contract.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarExecutable.sol\":\"IAxelarExecutable\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarExecutable.sol\":{\"keccak256\":\"0xc62de7533d4891bfd5bd8792e6638cb1d3ff4389dee2ce1f1dc8de235a057daa\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f934a6afcebde328dbf271af65a24370618f173c65f705739fb16e7f99195c15\",\"dweb:/ipfs/QmZ61TPX1wPk3UDhpGxktTdYvgei3kBG1iCMYLt99ANwhN\"]},\"@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol\":{\"keccak256\":\"0xbd92798eade563d8a663db59f6f04db5acdee5beda3a6d091e44a7d5c6b2f68e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1519882aed7b6de2ee1e316e5188d2bda1e305fc18a96b3895831f49dc9f90b0\",\"dweb:/ipfs/QmYTLwLGwmDkyX6GSE6PU93TkWP5mFz8qhmFyBrWfj6gaB\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\nimport { IAxelarGateway } from './IAxelarGateway.sol';\n\n/**\n * @title IAxelarExecutable\n * @dev Interface for a contract that is executable by Axelar Gateway's cross-chain message passing.\n * It defines a standard interface to execute commands sent from another chain.\n */\ninterface IAxelarExecutable {\n    /**\n     * @dev Thrown when a function is called with an invalid address.\n     */\n    error InvalidAddress();\n\n    /**\n     * @dev Thrown when the call is not approved by the Axelar Gateway.\n     */\n    error NotApprovedByGateway();\n\n    /**\n     * @notice Returns the address of the AxelarGateway contract.\n     * @return The Axelar Gateway contract associated with this executable contract.\n     */\n    function gateway() external view returns (IAxelarGateway);\n\n    /**\n     * @notice Executes the specified command sent from another chain.\n     * @dev This function is called by the Axelar Gateway to carry out cross-chain commands.\n     * Reverts if the call is not approved by the gateway or other checks fail.\n     * @param commandId The identifier of the command to execute.\n     * @param sourceChain The name of the source chain from where the command originated.\n     * @param sourceAddress The address on the source chain that sent the command.\n     * @param payload The payload of the command to be executed. This typically includes the function selector and encoded arguments.\n     */\n    function execute(\n        bytes32 commandId,\n        string calldata sourceChain,\n        string calldata sourceAddress,\n        bytes calldata payload\n    ) external;\n}\n",
+  "sourcePath": "@axelar-network\\axelar-gmp-sdk-solidity\\contracts\\interfaces\\IAxelarExecutable.sol",
+  "ast": {
+    "absolutePath": "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarExecutable.sol",
+    "exportedSymbols": {
+      "IAxelarExecutable": [
+        127
+      ],
+      "IAxelarGateway": [
+        192
+      ]
+    },
+    "id": 128,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 98,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:1"
+      },
+      {
+        "absolutePath": "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol",
+        "file": "./IAxelarGateway.sol",
+        "id": 100,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 128,
+        "sourceUnit": 193,
+        "src": "58:54:1",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 99,
+              "name": "IAxelarGateway",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 192,
+              "src": "67:14:1",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IAxelarExecutable",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 101,
+          "nodeType": "StructuredDocumentation",
+          "src": "114:216:1",
+          "text": " @title IAxelarExecutable\n @dev Interface for a contract that is executable by Axelar Gateway's cross-chain message passing.\n It defines a standard interface to execute commands sent from another chain."
+        },
+        "fullyImplemented": false,
+        "id": 127,
+        "linearizedBaseContracts": [
+          127
+        ],
+        "name": "IAxelarExecutable",
+        "nameLocation": "341:17:1",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "documentation": {
+              "id": 102,
+              "nodeType": "StructuredDocumentation",
+              "src": "365:81:1",
+              "text": " @dev Thrown when a function is called with an invalid address."
+            },
+            "errorSelector": "e6c4247b",
+            "id": 104,
+            "name": "InvalidAddress",
+            "nameLocation": "457:14:1",
+            "nodeType": "ErrorDefinition",
+            "parameters": {
+              "id": 103,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "471:2:1"
+            },
+            "src": "451:23:1"
+          },
+          {
+            "documentation": {
+              "id": 105,
+              "nodeType": "StructuredDocumentation",
+              "src": "480:83:1",
+              "text": " @dev Thrown when the call is not approved by the Axelar Gateway."
+            },
+            "errorSelector": "500c44b4",
+            "id": 107,
+            "name": "NotApprovedByGateway",
+            "nameLocation": "574:20:1",
+            "nodeType": "ErrorDefinition",
+            "parameters": {
+              "id": 106,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "594:2:1"
+            },
+            "src": "568:29:1"
+          },
+          {
+            "documentation": {
+              "id": 108,
+              "nodeType": "StructuredDocumentation",
+              "src": "603:162:1",
+              "text": " @notice Returns the address of the AxelarGateway contract.\n @return The Axelar Gateway contract associated with this executable contract."
+            },
+            "functionSelector": "116191b6",
+            "id": 114,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "gateway",
+            "nameLocation": "779:7:1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 109,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "786:2:1"
+            },
+            "returnParameters": {
+              "id": 113,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 112,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 114,
+                  "src": "812:14:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IAxelarGateway_$192",
+                    "typeString": "contract IAxelarGateway"
+                  },
+                  "typeName": {
+                    "id": 111,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 110,
+                      "name": "IAxelarGateway",
+                      "nameLocations": [
+                        "812:14:1"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 192,
+                      "src": "812:14:1"
+                    },
+                    "referencedDeclaration": 192,
+                    "src": "812:14:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IAxelarGateway_$192",
+                      "typeString": "contract IAxelarGateway"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "811:16:1"
+            },
+            "scope": 127,
+            "src": "770:58:1",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 115,
+              "nodeType": "StructuredDocumentation",
+              "src": "834:628:1",
+              "text": " @notice Executes the specified command sent from another chain.\n @dev This function is called by the Axelar Gateway to carry out cross-chain commands.\n Reverts if the call is not approved by the gateway or other checks fail.\n @param commandId The identifier of the command to execute.\n @param sourceChain The name of the source chain from where the command originated.\n @param sourceAddress The address on the source chain that sent the command.\n @param payload The payload of the command to be executed. This typically includes the function selector and encoded arguments."
+            },
+            "functionSelector": "49160658",
+            "id": 126,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "execute",
+            "nameLocation": "1476:7:1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 124,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 117,
+                  "mutability": "mutable",
+                  "name": "commandId",
+                  "nameLocation": "1501:9:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 126,
+                  "src": "1493:17:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 116,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1493:7:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 119,
+                  "mutability": "mutable",
+                  "name": "sourceChain",
+                  "nameLocation": "1536:11:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 126,
+                  "src": "1520:27:1",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 118,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1520:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 121,
+                  "mutability": "mutable",
+                  "name": "sourceAddress",
+                  "nameLocation": "1573:13:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 126,
+                  "src": "1557:29:1",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 120,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1557:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 123,
+                  "mutability": "mutable",
+                  "name": "payload",
+                  "nameLocation": "1611:7:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 126,
+                  "src": "1596:22:1",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 122,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1596:5:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1483:141:1"
+            },
+            "returnParameters": {
+              "id": 125,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1633:0:1"
+            },
+            "scope": 127,
+            "src": "1467:167:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 128,
+        "src": "331:1305:1",
+        "usedErrors": [
+          104,
+          107
+        ],
+        "usedEvents": []
+      }
+    ],
+    "src": "33:1604:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.20+commit.a1b79de6.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.16",
+  "updatedAt": "2024-11-13T15:00:16.986Z",
+  "devdoc": {
+    "details": "Interface for a contract that is executable by Axelar Gateway's cross-chain message passing. It defines a standard interface to execute commands sent from another chain.",
+    "errors": {
+      "InvalidAddress()": [
+        {
+          "details": "Thrown when a function is called with an invalid address."
+        }
+      ],
+      "NotApprovedByGateway()": [
+        {
+          "details": "Thrown when the call is not approved by the Axelar Gateway."
+        }
+      ]
+    },
+    "kind": "dev",
+    "methods": {
+      "execute(bytes32,string,string,bytes)": {
+        "details": "This function is called by the Axelar Gateway to carry out cross-chain commands. Reverts if the call is not approved by the gateway or other checks fail.",
+        "params": {
+          "commandId": "The identifier of the command to execute.",
+          "payload": "The payload of the command to be executed. This typically includes the function selector and encoded arguments.",
+          "sourceAddress": "The address on the source chain that sent the command.",
+          "sourceChain": "The name of the source chain from where the command originated."
+        }
+      },
+      "gateway()": {
+        "returns": {
+          "_0": "The Axelar Gateway contract associated with this executable contract."
+        }
+      }
+    },
+    "title": "IAxelarExecutable",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "execute(bytes32,string,string,bytes)": {
+        "notice": "Executes the specified command sent from another chain."
+      },
+      "gateway()": {
+        "notice": "Returns the address of the AxelarGateway contract."
+      }
+    },
+    "version": 1
+  }
+}
